@@ -21,14 +21,16 @@ public class PokerBoi {
    
     public PokerBoi()
     {
-        this.pot = 0;
-        this.blindsAmount = 5;
-        this.players = new ArrayList<>();
+       // this.pot = 0;
+        //this.blindsAmount = 5;
+        //this.players = new ArrayList<>();
+        this.pokerDeck = new Deck();
     }
    
     
     
     public static void main(String[] args) {
+        /*
         // TODO code application logic here
         PokerBoi game = new PokerBoi();
         game.pokerDeck = new Deck();
@@ -39,6 +41,23 @@ public class PokerBoi {
         game.players.add(new Player());
         // get new deck
         game.playRound();
+
+*/
+        //TEST
+        PokerBoi theGame = new PokerBoi();
+        ArrayList<Card> aHand = new ArrayList<>();
+        //get 5 cards with straight potential but in random order
+        for(int i = 0;i< 5; i++)
+        {
+            aHand.add(theGame.pokerDeck.getCard());
+        }
+        //print out each card
+       if(Evaluator.checkStraight(aHand))
+       {
+           System.out.println("straight!!!!");
+       }else{
+           System.out.println("nopey");
+       }
     }
     
     private void playRound()
@@ -97,40 +116,7 @@ public class PokerBoi {
        }
        }
        
-    }
-    
-    public void assessHand(){
-        /*
-//basic for assessing hand. i dunno if you should then assign a score to it?
-// HMM IVE STARTED SCORE SYSTEM BELOW BUT IM NOT SURE ITS HTE BEST WAY
-	check for RF
-		Score : 1
-	check for SF
-	// based on highest card in SF
-		K - 2
-		Q - 3
-		J - 4
-		10 - 5
-		9 - 6
-		8,7,6,5 -> 7,8,9,10
-		
-	check quad
-		AAAA - 11
-		KKKK - 12
-		QQQQ - 13
-		...
-		2222 - 23
-	check full house
-		// MAYBE SAY IF TRIPS AND A PAIR (MAKE SUR ETHE PAIR ISNT PART OF THE TRIPS) THEN ASSES THE ..TRIPS? I DUNNO.
-		// btw to score a full house its whoever has the highest trips. if trips are equal due to communcal cards, then its highest pair.
-	check flush
-	check straight
-	ALL CARDS FROM HERE UP HAVE NO KICKER. QUADS DOES BUT ITS IRRELEVANT.
-
-
-	check trips
-	check 2 pair
-	check pair
-	*/
-    }
 }
+    
+    
+
