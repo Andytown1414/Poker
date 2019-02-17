@@ -26,9 +26,9 @@ public class Deck {
        
        
         addSuit("Hearts");
-       // addSuit("Diamonds");
-       // addSuit("Spades");
-       // addSuit("Clubs");
+        addSuit("Diamonds");
+        addSuit("Spades");
+        addSuit("Clubs");
         
     }
     
@@ -39,9 +39,7 @@ public class Deck {
        cards.add(new Card(suit, "4"));
        cards.add(new Card(suit, "5"));
        cards.add(new Card(suit, "6"));
-      /*
        cards.add(new Card(suit, "7"));
-       
        cards.add(new Card(suit, "8"));
        cards.add(new Card(suit, "9"));
        cards.add(new Card(suit, "T"));
@@ -49,7 +47,7 @@ public class Deck {
        cards.add(new Card(suit, "Q"));
        cards.add(new Card(suit, "K"));
        cards.add(new Card(suit, "A"));
-     */
+     
        
        
     }

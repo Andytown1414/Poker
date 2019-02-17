@@ -43,21 +43,92 @@ public class PokerBoi {
         game.playRound();
 
 */
-        //TEST
-        PokerBoi theGame = new PokerBoi();
-        ArrayList<Card> aHand = new ArrayList<>();
-        //get 5 cards with straight potential but in random order
-        for(int i = 0;i< 5; i++)
+        //TEST1-------------------------------------------------------------------------
+        /*
+        double flushCount = 0;
+        double straightCount = 0;
+        double straightFlushCount = 0;
+        double royalFlushCount = 0;
+        double roundsPlayed = 0;
+        
+        boolean flush = false;
+        boolean straight = false;
+        boolean straightFlush = false;
+        
+       
+        for(int g = 0;g < 1000000;g++)
         {
-            aHand.add(theGame.pokerDeck.getCard());
+            flush = false;
+            straight = false;
+            
+        
+                PokerBoi theGame = new PokerBoi();
+                ArrayList<Card> aHand = new ArrayList<>();
+            
+                for(int i = 0;i< 5; i++)
+                {
+                    aHand.add(theGame.pokerDeck.getCard());
+                }
+                //print out each card
+               if(Evaluator.checkStraight(aHand))
+               {
+                 //  System.out.println("straight!!!!");
+                   straight = true;
+               }else{
+                  //System.out.println("no straight");
+               }
+
+                if(Evaluator.checkFlush(aHand))
+               {
+                   //System.out.println("flush!!!!");
+                   flush = true;
+               }else{
+                   //System.out.println("no flush");
+               }
+                // counting so if you get a straightflush, that is just that, it doesnt add to straightcount of flushcount. only adds to straightflushcount
+                if(flush && straight)
+                {
+                    //first check if its royal
+                    if(aHand.get(4).getValue() == 14 && aHand.get(3).getValue() == 13)
+                    {
+                        royalFlushCount++;
+                    }else{
+                        straightFlushCount++;
+                    }
+                }else if(straight)
+                        {
+                           straightCount++; 
+                        }
+                else if(flush)
+                        {
+                           flushCount++; 
+                        }
+                roundsPlayed++;        
         }
-        //print out each card
-       if(Evaluator.checkStraight(aHand))
-       {
-           System.out.println("straight!!!!");
-       }else{
-           System.out.println("nopey");
-       }
+        
+        System.out.println("Rounds Played = " + roundsPlayed);
+        System.out.println("Straights = " + straightCount + ". Frequency = " + (straightCount * 100)/roundsPlayed + "%");
+        System.out.println("Flushes = " + flushCount+ ". Frequency = " + (flushCount * 100)/roundsPlayed + "%");
+        System.out.println("Straight Flushes = " + straightFlushCount+ ". Frequency = " + (straightFlushCount * 100)/roundsPlayed + "%");
+        System.out.println("Royal Flushes = " + royalFlushCount+ ". Frequency = " + (royalFlushCount * 100)/roundsPlayed + "%");
+        */
+         //end test1------------------------------------------------------------------------------
+         //TEST2----------------------------------------------------------------------------------
+         
+         
+                PokerBoi theGame = new PokerBoi();
+                ArrayList<Card> aHand = new ArrayList<>();
+               
+                for(int i = 0;i< 5; i++)
+                {
+                    aHand.add(theGame.pokerDeck.getCard());
+                }
+                
+                Evaluator.countMatches(aHand);
+         
+         
+         
+         //endtest2-------------------------------------------------------------------------------
     }
     
     private void playRound()
