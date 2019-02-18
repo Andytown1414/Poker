@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Evaluator {
     
 
-
+// TODO - REALLY SHOULD BE USING THE WORD SCORE INSTEAD OF RANK, AS RANK IMPLIES RANK 1 IS BEST. IM DOING HIGH SCORE
   
     public static ArrayList<Card> sortHand(ArrayList<Card> hand)
     {
@@ -92,10 +92,10 @@ public class Evaluator {
         return flush;
     }
      
-     public static void countMatches(ArrayList<Card> hand)
+     public static int[] evaluateRank(ArrayList<Card> hand)
      {
          
-        
+        int[] handRank = {0,0};
          int temp;
          
          int[] matches = {0,0,0,0,0};
@@ -122,45 +122,145 @@ public class Evaluator {
          {
              sum += matches[i];
          }
-         
+         /*
          for(Card c : hand)
          {
              System.out.println(c.getSymbol());
          }
-         
-         System.out.println("sum is: " + sum);
+         */
+        // System.out.println("sum is: " + sum);
          switch (sum)
          {
             case 5:
-                System.out.println("no pair");
-                // here is where you would check straight n flush i guess?
+              //  System.out.println("no pair");
+                //check straight flush
+                if(checkStraight(hand)&& checkFlush(hand))
+                {
+                    // hand must be sorted after calling checkstraight. so if king is second highest
+                    // card then must be royal. the reason it checks the king and not ace, is cause
+                    // ace will come back in highest spot for a 5 high straight flush e.g 2345A
+                    if(hand.get(3).getValue() == 13)
+                    {
+                        //royal flush
+                        handRank[0] = 9;
+                    }else{
+                        //straight flush
+                        handRank[0] = 8;
+                    }
+                }else if (checkFlush(hand))
+                {
+                    // regular flush
+                    handRank[0] = 5;
+                }else if (checkStraight(hand))
+                {
+                    // regular straight
+                    handRank[0] = 4;
+                }else{
+                 // if matches = 5, and no straight or flush, then must just be high card.   
+                 handRank[0] = 0;   
+                }
                 break;
             case 7:
-                System.out.println("pair");
+               // System.out.println("pair");
+                handRank[0] = 1;
                 break;
             case 9:
-                System.out.println("two pair");
+               // System.out.println("two pair");
+                handRank[0] = 2;
                 break;
             case 11:
-                System.out.println("trips");
+               // System.out.println("trips");
+                handRank[0] = 3;
                 break;
             case 13:
-                System.out.println("full house");
+               // System.out.println("full house");
+                handRank[0] = 6;
                 break;
             case 17:
-                System.out.println("quads");
+               // System.out.println("quads");
+                handRank[0] = 7;
                 break;
             default:
+                // throw some kind of exception here?
                 System.out.println("something went wrong with the summation");
             
-              
-                 
+                
          }
          
          
          
-         
+         return handRank;
          
             //    System.out.println(matches);
+     }
+     /*
+     public static int[] evaluateSecondRank(int[] handRank,ArrayList<Card> hand )
+     {
+         sortHand(hand);
+         
+         switch (handRank[0])
+         {
+             case 0:
+                 handRank[1] = getNoPairRank(hand);
+             break;  
+              case 1:
+                 handRank[1] = getPairRank(hand);
+             break;
+              case 2:
+                 handRank[1] = getTwoPairRank(hand);
+             break;
+              case 3:
+                 handRank[1] = getTripsRank(hand);
+             break;
+              case 4:
+                 handRank[1] = getStraightRank(hand);
+             break;
+              case 5:
+                 handRank[1] = getFlushRank(hand);
+             break;
+              case 6:
+                 handRank[1] = getFullHouseRank(hand);
+             break;
+             case 7:
+                 handRank[1] = getQuadsRank(hand);
+             break;
+             case 8:
+                 handRank[1] = getStraightFlushRank(hand);
+             break;
+             case 9:
+                 handRank[1] = 0;
+             break;
+         }
+         return handRank;
+     }
+     */
+     public static int getStraightFlushRank(ArrayList<Card> hand)
+     {
+         // check the hand (which is already sorted) for the last card and return based on that value.
+         // so king high is score of 8, and 5 high is score of 0
+         switch (hand.get(4).getValue())
+         {
+             case 13:
+                 return 8;
+             case 12:
+                 return 7;
+             case 11:
+                 return 6;
+             case 10:
+                 return 5;
+             case 9:
+                 return 4;
+             case 8:
+                 return 3;
+             case 7:
+                 return 2;
+             case 6:
+                 return 1;
+             case 5:
+                 return 0;
+             default:
+                 return -1;
+             
+         }
      }
 }

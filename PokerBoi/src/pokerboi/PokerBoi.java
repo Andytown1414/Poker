@@ -44,20 +44,30 @@ public class PokerBoi {
 
 */
         //TEST1-------------------------------------------------------------------------
-        /*
-        double flushCount = 0;
+        
+        
+        double noPairCount = 0;
+        double pairCount = 0;
+        double twoPairCount = 0;
+        double tripsCount = 0;
         double straightCount = 0;
+        double flushCount = 0;
+        double fullHouseCount = 0;
+        double quadsCount = 0;
         double straightFlushCount = 0;
         double royalFlushCount = 0;
+        
         double roundsPlayed = 0;
         
         boolean flush = false;
         boolean straight = false;
         boolean straightFlush = false;
         
+        int[] rank = {0,0};
        
-        for(int g = 0;g < 1000000;g++)
+        for(int g = 0;g < 10000000;g++)
         {
+            
             flush = false;
             straight = false;
             
@@ -69,53 +79,63 @@ public class PokerBoi {
                 {
                     aHand.add(theGame.pokerDeck.getCard());
                 }
-                //print out each card
-               if(Evaluator.checkStraight(aHand))
-               {
-                 //  System.out.println("straight!!!!");
-                   straight = true;
-               }else{
-                  //System.out.println("no straight");
-               }
-
-                if(Evaluator.checkFlush(aHand))
-               {
-                   //System.out.println("flush!!!!");
-                   flush = true;
-               }else{
-                   //System.out.println("no flush");
-               }
-                // counting so if you get a straightflush, that is just that, it doesnt add to straightcount of flushcount. only adds to straightflushcount
-                if(flush && straight)
-                {
-                    //first check if its royal
-                    if(aHand.get(4).getValue() == 14 && aHand.get(3).getValue() == 13)
-                    {
-                        royalFlushCount++;
-                    }else{
-                        straightFlushCount++;
-                    }
-                }else if(straight)
-                        {
-                           straightCount++; 
-                        }
-                else if(flush)
-                        {
-                           flushCount++; 
-                        }
+               
+                rank = Evaluator.evaluateRank(aHand);
+                
+                switch (rank[0])
+         {
+             case 0:
+                 noPairCount++;
+             break;  
+              case 1:
+                 pairCount++;
+             break;
+              case 2:
+                 twoPairCount++;
+             break;
+              case 3:
+                 tripsCount++;
+             break;
+              case 4:
+                 straightCount++;
+             break;
+              case 5:
+                 flushCount++;
+             break;
+              case 6:
+                 fullHouseCount++;
+             break;
+             case 7:
+                 quadsCount++;
+             break;
+             case 8:
+                 straightFlushCount++;
+             break;
+             case 9:
+                 royalFlushCount++;
+             break;
+         }
+                
+                
                 roundsPlayed++;        
         }
         
         System.out.println("Rounds Played = " + roundsPlayed);
+        System.out.println("No Pairs = " + noPairCount + ". Frequency = " + (noPairCount * 100)/roundsPlayed + "%");
+        System.out.println("Pairs = " + pairCount + ". Frequency = " + (pairCount * 100)/roundsPlayed + "%");
+        System.out.println("Two Pair = " + twoPairCount + ". Frequency = " + (twoPairCount * 100)/roundsPlayed + "%");
+        System.out.println("Trips = " + tripsCount + ". Frequency = " + (tripsCount * 100)/roundsPlayed + "%");
         System.out.println("Straights = " + straightCount + ". Frequency = " + (straightCount * 100)/roundsPlayed + "%");
-        System.out.println("Flushes = " + flushCount+ ". Frequency = " + (flushCount * 100)/roundsPlayed + "%");
+        System.out.println("Flushes = " + flushCount + ". Frequency = " + (flushCount * 100)/roundsPlayed + "%");
+        System.out.println("FullHouse = " + fullHouseCount + ". Frequency = " + (fullHouseCount * 100)/roundsPlayed + "%");
+        System.out.println("Quads = " + quadsCount + ". Frequency = " + (quadsCount * 100)/roundsPlayed + "%");
         System.out.println("Straight Flushes = " + straightFlushCount+ ". Frequency = " + (straightFlushCount * 100)/roundsPlayed + "%");
         System.out.println("Royal Flushes = " + royalFlushCount+ ". Frequency = " + (royalFlushCount * 100)/roundsPlayed + "%");
-        */
+        
          //end test1------------------------------------------------------------------------------
          //TEST2----------------------------------------------------------------------------------
          
-         
+         /*
                 PokerBoi theGame = new PokerBoi();
                 ArrayList<Card> aHand = new ArrayList<>();
                
@@ -124,9 +144,9 @@ public class PokerBoi {
                     aHand.add(theGame.pokerDeck.getCard());
                 }
                 
-                Evaluator.countMatches(aHand);
+                Evaluator.evaluateRank(aHand);
          
-         
+         */
          
          //endtest2-------------------------------------------------------------------------------
     }
