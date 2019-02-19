@@ -45,7 +45,7 @@ public class PokerBoi {
 */
         //TEST1-------------------------------------------------------------------------
         
-        
+      
         double noPairCount = 0;
         double pairCount = 0;
         double twoPairCount = 0;
@@ -65,7 +65,7 @@ public class PokerBoi {
         
         int[] rank = {0,0};
        
-        for(int g = 0;g < 10000000;g++)
+        for(int g = 0;g < 5;g++)
         {
             
             flush = false;
@@ -81,6 +81,7 @@ public class PokerBoi {
                 }
                
                 rank = Evaluator.evaluateRank(aHand);
+                System.out.println(Evaluator.getNoPairRank(aHand));
                 
                 switch (rank[0])
          {
@@ -132,6 +133,7 @@ public class PokerBoi {
         System.out.println("Straight Flushes = " + straightFlushCount+ ". Frequency = " + (straightFlushCount * 100)/roundsPlayed + "%");
         System.out.println("Royal Flushes = " + royalFlushCount+ ". Frequency = " + (royalFlushCount * 100)/roundsPlayed + "%");
         
+          
          //end test1------------------------------------------------------------------------------
          //TEST2----------------------------------------------------------------------------------
          

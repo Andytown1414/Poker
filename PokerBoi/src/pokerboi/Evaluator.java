@@ -234,6 +234,68 @@ public class Evaluator {
          return handRank;
      }
      */
+     
+     
+     
+     public static int getNoPairRank(ArrayList<Card> hand)
+     {
+        
+        //   AKQJT98765432
+        //   1010011000100
+        //   1111001000000
+         
+       for (Card cd : hand)
+        {
+            System.out.println(cd.getSymbol());
+        }  
+         
+         
+         
+        char[] backwardsCharArray = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+                
+        for(Card c : hand)
+        {
+            backwardsCharArray[c.getValue() - 2] = 1;
+        }
+        
+        char[] charArray = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+         System.out.println("backwardsCharArray.length is: " + backwardsCharArray.length);
+        for(int i = 0;i<charArray.length;i++)
+        {
+            charArray[i] = backwardsCharArray[backwardsCharArray.length - 1- i];
+        }
+                String binaryString = new String(charArray);
+                
+        return (int)Long.parseLong(binaryString, 2);
+     }
+     public static int getPairRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
+     public static int getTwoPairRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
+     public static int getTripsRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
+     public static int getStraightRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
+     public static int getFlushRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
+     public static int getFullHouseRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
+     public static int getQuadsRank(ArrayList<Card> hand)
+     {
+        return 0;
+     }
      public static int getStraightFlushRank(ArrayList<Card> hand)
      {
          // check the hand (which is already sorted) for the last card and return based on that value.
@@ -263,4 +325,6 @@ public class Evaluator {
              
          }
      }
+     
+     
 }
