@@ -241,35 +241,54 @@ public class Evaluator {
      {
         
         //   AKQJT98765432
-        //   1010011000100
-        //   1111001000000
+       
          
        for (Card cd : hand)
         {
-            System.out.println(cd.getSymbol());
+            System.out.print(cd.getSymbol());
         }  
+         System.out.println("");
          
          
-         
-        char[] backwardsCharArray = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+        char[] charArray = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
                 
         for(Card c : hand)
         {
-            backwardsCharArray[c.getValue() - 2] = 1;
+            charArray[Math.abs(c.getValue() - 14)] = '1';
         }
-        
-        char[] charArray = {0,0,0,0,0,0,0,0,0,0,0,0,0};
-         System.out.println("backwardsCharArray.length is: " + backwardsCharArray.length);
-        for(int i = 0;i<charArray.length;i++)
-        {
-            charArray[i] = backwardsCharArray[backwardsCharArray.length - 1- i];
-        }
+       
                 String binaryString = new String(charArray);
                 
         return (int)Long.parseLong(binaryString, 2);
      }
      public static int getPairRank(ArrayList<Card> hand)
      {
+         //get binary binary string of 13 values, so whatever pair you have you make it a 1.
+         //then there is another 13 numbers like in getNoPair for the last 3 cards, so its 26 chars long.
+         
+         //---------------------------------------
+         // direct copy paste from evaluateRank
+          int temp;
+         
+         int[] matches = {0,0,0,0,0};
+        
+         
+         for(int i = 0; i < 5;i++)
+         {
+            temp = hand.get(i).getValue();
+            
+            for(int j = 0; j<5;j++)
+            {
+                if(hand.get(j).getValue() == temp)
+                {
+                    matches[i]++;
+                }
+            }
+            
+         }
+         //-----------------------------------------
+         // check what are the cards that have a 2.
+         // get the other 3 put them in a hand and then do the same thing as noPair algorithm
         return 0;
      }
      public static int getTwoPairRank(ArrayList<Card> hand)
