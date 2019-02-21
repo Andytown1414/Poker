@@ -63,9 +63,9 @@ public class PokerBoi {
         boolean straight = false;
         boolean straightFlush = false;
         
-        int[] rank = {0,0};
+        long[] rank = {0,0};
        
-        for(int g = 0;g < 5;g++)
+        for(int g = 0;g < 100;g++)
         {
             
             flush = false;
@@ -81,9 +81,11 @@ public class PokerBoi {
                 }
                
                 rank = Evaluator.evaluateRank(aHand);
-                System.out.println(Evaluator.getNoPairRank(aHand));
+                System.out.println("Rank: " + rank[0] + " , " + rank[1]);
+                System.out.println("");
                 
-                switch (rank[0])
+                
+                switch ((int)rank[0])
          {
              case 0:
                  noPairCount++;

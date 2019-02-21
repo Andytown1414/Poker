@@ -92,10 +92,16 @@ public class Evaluator {
         return flush;
     }
      
-     public static int[] evaluateRank(ArrayList<Card> hand)
+     public static long[] evaluateRank(ArrayList<Card> hand)
      {
          
-        int[] handRank = {0,0};
+         for (Card cd : hand)
+        {
+            System.out.print(cd.getSymbol());
+        }  
+         System.out.println("");
+         
+        long[] handRank = {0,0};
          int temp;
          
          int[] matches = {0,0,0,0,0};
@@ -157,20 +163,25 @@ public class Evaluator {
                     handRank[0] = 4;
                 }else{
                  // if matches = 5, and no straight or flush, then must just be high card.   
-                 handRank[0] = 0;   
+                 System.out.println("No Pair");
+                 handRank[0] = 0;  
+                 handRank[1] = getNoPairRank(hand);
                 }
                 break;
             case 7:
-               // System.out.println("pair");
+                System.out.println("Pair");
                 handRank[0] = 1;
+                handRank[1] = getPairRank(hand);
                 break;
             case 9:
-               // System.out.println("two pair");
+                System.out.println("Two pair");
                 handRank[0] = 2;
+                handRank[1] = getTwoPairRank(hand);
                 break;
             case 11:
-               // System.out.println("trips");
+                System.out.println("Trips");
                 handRank[0] = 3;
+                handRank[1] = getTripsRank(hand);
                 break;
             case 13:
                // System.out.println("full house");
@@ -191,67 +202,23 @@ public class Evaluator {
          
          return handRank;
          
-            //    System.out.println(matches);
-     }
-     /*
-     public static int[] evaluateSecondRank(int[] handRank,ArrayList<Card> hand )
-     {
-         sortHand(hand);
          
-         switch (handRank[0])
-         {
-             case 0:
-                 handRank[1] = getNoPairRank(hand);
-             break;  
-              case 1:
-                 handRank[1] = getPairRank(hand);
-             break;
-              case 2:
-                 handRank[1] = getTwoPairRank(hand);
-             break;
-              case 3:
-                 handRank[1] = getTripsRank(hand);
-             break;
-              case 4:
-                 handRank[1] = getStraightRank(hand);
-             break;
-              case 5:
-                 handRank[1] = getFlushRank(hand);
-             break;
-              case 6:
-                 handRank[1] = getFullHouseRank(hand);
-             break;
-             case 7:
-                 handRank[1] = getQuadsRank(hand);
-             break;
-             case 8:
-                 handRank[1] = getStraightFlushRank(hand);
-             break;
-             case 9:
-                 handRank[1] = 0;
-             break;
-         }
-         return handRank;
      }
-     */
+    
      
      
      
-     public static int getNoPairRank(ArrayList<Card> hand)
+     public static long getNoPairRank(ArrayList<Card> hand)
      {
         
         //   AKQJT98765432
+         
        
-         
-       for (Card cd : hand)
-        {
-            System.out.print(cd.getSymbol());
-        }  
-         System.out.println("");
-         
          
         char[] charArray = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
                 
+        
+        
         for(Card c : hand)
         {
             charArray[Math.abs(c.getValue() - 14)] = '1';
@@ -259,17 +226,21 @@ public class Evaluator {
        
                 String binaryString = new String(charArray);
                 
-        return (int)Long.parseLong(binaryString, 2);
+        return Long.parseLong(binaryString, 2);
      }
-     public static int getPairRank(ArrayList<Card> hand)
+     public static long getPairRank(ArrayList<Card> hand)
      {
+         
+         
+         
+         
          //get binary binary string of 13 values, so whatever pair you have you make it a 1.
          //then there is another 13 numbers like in getNoPair for the last 3 cards, so its 26 chars long.
          
-         //---------------------------------------
-         // direct copy paste from evaluateRank
+        
           int temp;
-         
+          int pairCard1 = -1;
+          int pairCard2 = -1;
          int[] matches = {0,0,0,0,0};
         
          
@@ -282,40 +253,192 @@ public class Evaluator {
                 if(hand.get(j).getValue() == temp)
                 {
                     matches[i]++;
+                    if(matches[i] == 2)
+                    {
+                        if(pairCard1 < 0)
+                        {
+                            pairCard1 = i;
+                        }else{
+                            pairCard2 = i;
+                        }
+                    }
+                    
                 }
             }
             
          }
-         //-----------------------------------------
-         // check what are the cards that have a 2.
-         // get the other 3 put them in a hand and then do the same thing as noPair algorithm
-        return 0;
+         
+         
+        char[] charArrayMSB = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
+        charArrayMSB[Math.abs(hand.get(pairCard1).getValue() - 14)] = '1';
+        
+        char[] charArrayLSB = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
+                
+        
+        
+        for(Card c : hand)
+        {
+            if(hand.indexOf(c) != pairCard1 && hand.indexOf(c) != pairCard2)
+            {
+                charArrayLSB[Math.abs(c.getValue() - 14)] = '1';
+            }
+            
+        }
+       
+                String binaryStringLSB = new String(charArrayLSB);
+                String binaryStringMSB = new String(charArrayMSB);
+                String totalBinaryString = binaryStringMSB + binaryStringLSB;
+               
+                
+        return Long.parseLong(totalBinaryString, 2);
+       
+         
+       
      }
-     public static int getTwoPairRank(ArrayList<Card> hand)
+     public static long getTwoPairRank(ArrayList<Card> hand)
+     {
+        
+          int temp;
+          int pair1Card1 = -1;
+          int pair1Card2 = -1;
+          int pair2Card1 = -1;
+          int pair2Card2 = -1;
+         int[] matches = {0,0,0,0,0};
+        
+         
+         for(int i = 0; i < 5;i++)
+         {
+            temp = hand.get(i).getValue();
+            
+            for(int j = 0; j<5;j++)
+            {
+                if(hand.get(j).getValue() == temp)
+                {
+                    matches[i]++;
+                    if(matches[i] == 2)
+                    {
+                        if(pair1Card1 < 0)
+                        {// if card is first card with 2
+                            pair1Card1 = i;
+                        }
+                        else if(hand.get(i).getValue() == hand.get(pair1Card1).getValue())
+                            {// if not first 2 card, but has the same value as first 2 card
+                                pair1Card2 = i;
+                            }
+                        else if(pair2Card1 < 0)
+                            {
+                                pair2Card1 = i;
+                            }
+                        else
+                            {
+                                pair2Card2 = i;
+                            }
+                    }
+                    
+                }
+            }
+            
+         }
+         
+         
+        char[] charArrayMSB = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
+        charArrayMSB[Math.abs(hand.get(pair1Card1).getValue() - 14)] = '1';
+        charArrayMSB[Math.abs(hand.get(pair2Card1).getValue() - 14)] = '1';
+        
+        char[] charArrayLSB = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
+                
+        for(Card c : hand)
+        {
+            if(hand.indexOf(c) != pair1Card1 && hand.indexOf(c) != pair1Card2 && hand.indexOf(c) != pair2Card1 && hand.indexOf(c) != pair2Card2)
+            {
+                charArrayLSB[Math.abs(c.getValue() - 14)] = '1';
+            }
+               
+        }
+       
+                String binaryStringLSB = new String(charArrayLSB);
+                String binaryStringMSB = new String(charArrayMSB);
+                String totalBinaryString = binaryStringMSB + binaryStringLSB;
+                
+        return Long.parseLong(totalBinaryString, 2);
+     }
+     public static long getTripsRank(ArrayList<Card> hand)
+     {
+        
+          int temp;
+          int pairCard1 = -1;
+          int pairCard2 = -1;
+          int pairCard3 = -1;
+         int[] matches = {0,0,0,0,0};
+        
+         
+         for(int i = 0; i < 5;i++)
+         {
+            temp = hand.get(i).getValue();
+            
+            for(int j = 0; j<5;j++)
+            {
+                if(hand.get(j).getValue() == temp)
+                {
+                    matches[i]++;
+                    if(matches[i] == 3)
+                    {
+                        if(pairCard1 < 0)
+                        {
+                            pairCard1 = i;
+                        }else if(pairCard2 < 0){
+                            pairCard2 = i;
+                        }else
+                        {
+                            pairCard3 = i;
+                        }
+                    }
+                    
+                }
+            }
+            
+         }
+         
+         
+        char[] charArrayMSB = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
+        charArrayMSB[Math.abs(hand.get(pairCard1).getValue() - 14)] = '1';
+        
+        char[] charArrayLSB = {'0','0','0','0','0','0','0','0','0','0','0','0','0'};
+                
+        
+        
+        for(Card c : hand)
+        {
+            if(hand.indexOf(c) != pairCard1 && hand.indexOf(c) != pairCard2 && hand.indexOf(c) != pairCard3)
+            {
+                charArrayLSB[Math.abs(c.getValue() - 14)] = '1';
+            }
+            
+        }
+       
+                String binaryStringLSB = new String(charArrayLSB);
+                String binaryStringMSB = new String(charArrayMSB);
+                String totalBinaryString = binaryStringMSB + binaryStringLSB;
+               
+        return Long.parseLong(totalBinaryString, 2);
+     }
+     public static long getStraightRank(ArrayList<Card> hand)
      {
         return 0;
      }
-     public static int getTripsRank(ArrayList<Card> hand)
+     public static long getFlushRank(ArrayList<Card> hand)
      {
         return 0;
      }
-     public static int getStraightRank(ArrayList<Card> hand)
+     public static long getFullHouseRank(ArrayList<Card> hand)
      {
         return 0;
      }
-     public static int getFlushRank(ArrayList<Card> hand)
+     public static long getQuadsRank(ArrayList<Card> hand)
      {
         return 0;
      }
-     public static int getFullHouseRank(ArrayList<Card> hand)
-     {
-        return 0;
-     }
-     public static int getQuadsRank(ArrayList<Card> hand)
-     {
-        return 0;
-     }
-     public static int getStraightFlushRank(ArrayList<Card> hand)
+     public static long getStraightFlushRank(ArrayList<Card> hand)
      {
          // check the hand (which is already sorted) for the last card and return based on that value.
          // so king high is score of 8, and 5 high is score of 0
