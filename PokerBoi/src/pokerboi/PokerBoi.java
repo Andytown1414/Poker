@@ -30,22 +30,30 @@ public class PokerBoi {
     
     
     public static void main(String[] args) {
-        /*
+        
         // TODO code application logic here
         PokerBoi game = new PokerBoi();
         game.pokerDeck = new Deck();
         //get number of players in round
         game.players.add(new Player());
         game.players.add(new Player());
-        game.players.add(new Player());
-        game.players.add(new Player());
-        // get new deck
+       // game.players.add(new Player());
+       // game.players.add(new Player());
+        
         game.playRound();
 
-*/
-        //TEST1-------------------------------------------------------------------------
-        
-      
+
+       test1();
+    }
+     private void playRound()
+    {
+        //player 0 pay small blinds
+        // player 1 pay big blinds
+        // deal 2 cards to each players
+        // deal 3 cards to table
+    }
+    private static void test1()
+    {
         double noPairCount = 0;
         double pairCount = 0;
         double twoPairCount = 0;
@@ -56,22 +64,18 @@ public class PokerBoi {
         double quadsCount = 0;
         double straightFlushCount = 0;
         double royalFlushCount = 0;
-        
         double roundsPlayed = 0;
         
-        boolean flush = false;
-        boolean straight = false;
-        boolean straightFlush = false;
+        long roundsToPlay = 10;
+        
+       
         
         long[] rank = {0,0};
        
-        for(int g = 0;g < 100;g++)
+        for(int g = 0;g < roundsToPlay;g++)
         {
             
-            flush = false;
-            straight = false;
             
-        
                 PokerBoi theGame = new PokerBoi();
                 ArrayList<Card> aHand = new ArrayList<>();
             
@@ -81,8 +85,8 @@ public class PokerBoi {
                 }
                
                 rank = Evaluator.evaluateRank(aHand);
-                System.out.println("Rank: " + rank[0] + " , " + rank[1]);
-                System.out.println("");
+               // System.out.println("Rank: " + rank[0] + " , " + rank[1]);
+               // System.out.println("");
                 
                 
                 switch ((int)rank[0])
@@ -134,82 +138,11 @@ public class PokerBoi {
         System.out.println("Quads = " + quadsCount + ". Frequency = " + (quadsCount * 100)/roundsPlayed + "%");
         System.out.println("Straight Flushes = " + straightFlushCount+ ". Frequency = " + (straightFlushCount * 100)/roundsPlayed + "%");
         System.out.println("Royal Flushes = " + royalFlushCount+ ". Frequency = " + (royalFlushCount * 100)/roundsPlayed + "%");
-        
-          
-         //end test1------------------------------------------------------------------------------
-         //TEST2----------------------------------------------------------------------------------
-         
-         /*
-                PokerBoi theGame = new PokerBoi();
-                ArrayList<Card> aHand = new ArrayList<>();
-               
-                for(int i = 0;i< 5; i++)
-                {
-                    aHand.add(theGame.pokerDeck.getCard());
-                }
-                
-                Evaluator.evaluateRank(aHand);
-         
-         */
-         
-         //endtest2-------------------------------------------------------------------------------
     }
     
-    private void playRound()
-    {
-        //player 0 pay small blinds
-        // player 1 pay big blinds
-        // deal 2 cards to each players
-        // deal 3 cards to table
-    }
+   
     
-    public void calcHand(ArrayList<Card> cards) throws NumberFormatException
-    {
-      // check that there is between 2 and 7 cards first
-       if ((cards.size() >= 2)&&(cards.size() <= 7)) 
-               {
-                   // check 
-                  if(cards.size() == 2)
-                  {
-                     //check pairs
-                  }else if(cards.size()== 3)
-                  {
-                      //check trips
-                      //check pairs
-                  }else if(cards.size()== 4)
-                  {
-                      //check quads
-                      //check trips
-                      //check twopair
-                      //check pairs
-                      
-                     
-                     
-                  }else{
-                      // these ones it gets tricky, cause you dont wanna say check for straight, and then not check for flush, or vice versa
-                      // i guess solution is that these check if thats ALL you have
-                      // 
-                      
-                      //check RF
-                      //check SF house check if thats ALL you have, although SF needs rank anyway so RF really doesnt need to exist
-                      //check quads
-                      //check full house check if thats ALL you have, cause you can have this but also quads with 7 cards
-                      //check flush
-                      //check straight
-                      //check trips
-                      //check twopair
-                      //check pairs
-                  }
-                   
-                   
-                   
-                   
-                   
-                   
-               }else{
-           System.out.println("throw some exception here? needs to be 2 - 7 cards");
-       }
-       }
+    
        
 }
     

@@ -4,10 +4,21 @@
  * and open the template in the editor.
  */
 package pokerboi;
+
+import java.util.ArrayList;
+
 /**
  *
  * @author Andrew
  */
 public class Player {
+    
+    private ArrayList<Card> holeCards;
+    
+    public Player()
+    {
+        
+    }
+    
     
 }
