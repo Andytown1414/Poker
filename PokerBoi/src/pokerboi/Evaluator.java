@@ -104,46 +104,82 @@ public class Evaluator {
     public static long[] evaluateRank5To7(ArrayList<Card> hand)
     {
         long[] rank = {0,0};
+        
+        switch (hand.size()) {
+            case 5:
+                rank = evaluateRank5(hand);
+                break;
+            case 6:
+                rank = evaluateRank6(hand);
+                break;
+            case 7:
+                rank = evaluateRank7(hand);
+                break;
+            default:
+                System.out.println("error in evaluaterank5to7");
+                rank[0] = -1;
+                rank[1] = -1;
+                break;
+        }
+        // ALSO RETURN HAND found at that rank?, SO NEEDS TO RETURN COLLECTION OF 2 THINGS...?
+        return rank;
+    }
+     public static long[] evaluateRank7(ArrayList<Card> hand7)
+     {
+         // i is the card to skip each time, cause with 6 cards theres only 6 possible hands of 5, 1 left out each time.
+            ArrayList<Card> hand6 = new ArrayList();
+            long[] rank = {0,0};
         long[] tempRank = {0,0};
-        ArrayList<Card> hand5 = new ArrayList();
-        if(hand.size() == 5)
-        {
-            rank = evaluateRank5(hand);
-            hand5 = hand;
-        }else if(hand.size() == 6)
-        {
-            // i is the card to skip each time, cause with 6 cards theres only 6 possible hands of 5, 1 left out each time.
-            for(int i = 0; i < 6;i++)
+            
+            
+            for(Card c : hand7)
+            {
+                for(int j = 0; j < 7; j++)
+                {
+                    if(j != hand7.indexOf(c))
+                    {
+                        hand6.add(hand7.get(j));
+                    }
+                }
+                tempRank = evaluateRank6(hand6);
+                if(tempRank[0] > rank[0])
+                rank = tempRank;
+                else if ((tempRank[0] == rank[0])&&(tempRank[1] > rank[1]))
+                {
+                    rank = tempRank;
+                }
+                hand6.clear();
+            }
+            return rank;
+     }
+     public static long[] evaluateRank6(ArrayList<Card> hand6)
+     {
+         // i is the card to skip each time, cause with 6 cards theres only 6 possible hands of 5, 1 left out each time.
+            ArrayList<Card> hand5 = new ArrayList();
+            long[] rank = {0,0};
+        long[] tempRank = {0,0};
+            
+            
+            for(Card c : hand6)
             {
                 for(int j = 0; j < 6; j++)
                 {
-                    if(j != i)
+                    if(j != hand6.indexOf(c))
                     {
-                        hand5.add(hand.get(j));
+                        hand5.add(hand6.get(j));
                     }
                 }
                 tempRank = evaluateRank5(hand5);
                 if(tempRank[0] > rank[0])
                 rank = tempRank;
-                else if (tempRank[0] == rank[0])
+                else if ((tempRank[0] == rank[0])&&(tempRank[1] > rank[1]))
                 {
-                    
+                    rank = tempRank;
                 }
+                hand5.clear();
             }
-            //call 15 times?
-        }else if(hand.size() == 7)
-        {
-            // call 21 times.
-        }else{
-            System.out.println("error in evaluaterank5to7");
-            
-         rank[0] = -1;
-         rank[1] = -1;
-        }
-        // ALSO RETURN HAND, SO NEEDS TO RETURN COLLECTION OF 2 THINGS...?
-        return rank;
-    }
-     
+            return rank;
+     }
      public static long[] evaluateRank5(ArrayList<Card> hand)
      {
          

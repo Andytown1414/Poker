@@ -25,14 +25,14 @@ public class Player {
     {
         ArrayList<Card> total;
         //total =  combine holecards with commons and call evaluate with al combinations.
-        Evaluator.evaluateRank5(total)
-                or
-        Evaluator.evaluateRank6(total)
-                or Evaluator.evaluateRank7(total)
+       // Evaluator.evaluateRank5(total)
+         //       or
+     //   Evaluator.evaluateRank6(total)
+             //   or Evaluator.evaluateRank7(total)
     }
     public String getAction()
     {
-        
+        return "hi";
     }
     
 }

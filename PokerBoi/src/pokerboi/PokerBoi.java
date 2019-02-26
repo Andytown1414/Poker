@@ -32,15 +32,15 @@ public class PokerBoi {
     public static void main(String[] args) {
         
         // TODO code application logic here
-        PokerBoi game = new PokerBoi();
-        game.pokerDeck = new Deck();
+      //  PokerBoi game = new PokerBoi();
+       // game.pokerDeck = new Deck();
         //get number of players in round
-        game.players.add(new Player());
-        game.players.add(new Player());
+      //  game.players.add(new Player());
+    //    game.players.add(new Player());
        // game.players.add(new Player());
        // game.players.add(new Player());
         
-        game.playRound();
+     //   game.playRound();
 
 
        test1();
@@ -66,7 +66,7 @@ public class PokerBoi {
         double royalFlushCount = 0;
         double roundsPlayed = 0;
         
-        long roundsToPlay = 10;
+        long roundsToPlay = 1000000;
         
        
         
@@ -79,12 +79,12 @@ public class PokerBoi {
                 PokerBoi theGame = new PokerBoi();
                 ArrayList<Card> aHand = new ArrayList<>();
             
-                for(int i = 0;i< 5; i++)
+                for(int i = 0;i< 7; i++)
                 {
                     aHand.add(theGame.pokerDeck.getCard());
                 }
                
-                rank = Evaluator.evaluateRank(aHand);
+                rank = Evaluator.evaluateRank5To7(aHand);
                // System.out.println("Rank: " + rank[0] + " , " + rank[1]);
                // System.out.println("");
                 
