@@ -101,7 +101,29 @@ public class Evaluator {
          
          System.out.println("");
      }
-    public static long[] evaluateRank5To7(ArrayList<Card> hand)
+     
+     public static long[] evaluateRank5To7Opt(ArrayList<Card> hand)
+     {
+         return evaluateRank5To7(hand);
+     }
+     
+      public static long[] evaluateRank5To7Opt(ArrayList<Card> hand, ArrayList<Card> hand2 )
+     {
+         // maybe should have some kind of check that hand 2 is only 2 cards, but what ever
+         ArrayList<Card> commonClone = new ArrayList();
+         
+         for(Card c : hand)
+         {
+             commonClone.add(c);
+         }  
+         for(Card c : hand2)
+         {
+             commonClone.add(c);
+         }  
+           
+         return evaluateRank5To7(commonClone);
+     }
+    private static long[] evaluateRank5To7(ArrayList<Card> hand)
     {
         long[] rank = {0,0};
         

@@ -18,17 +18,13 @@ public class Deck {
      private Random randomGenerator;
      private int numberOfDecks;
         
-     
+    
     public Deck(){
        
-        cards = new ArrayList<>();
-        randomGenerator = new Random();
-       
-       
-        addSuit("Hearts");
-        addSuit("Diamonds");
-        addSuit("Spades");
-        addSuit("Clubs");
+        this.cards = new ArrayList<>();
+        this.randomGenerator = new Random();
+        this.freshDeck();
+        
         
     }
     
@@ -61,7 +57,19 @@ public class Deck {
         //System.out.println("Card Removed From Deck, Cards Remaining:" + this.cards.size());
         return drawnCard;
     }
-    
+    private void freshDeck()
+    {
+        this.cards.clear();
+        addSuit("Hearts");
+        addSuit("Diamonds");
+        addSuit("Spades");
+        addSuit("Clubs");
+    }
+    public void reFreshDeck()
+    {
+        // the only reason this method exists is because freshDeck is a private method, and its called by the contructor so i think you should keep it private...? i dunno maybe it doesnt really matter but netbeans gave a warning about having an overidable method in constructor.
+        this.freshDeck();
+    }
     public int cardsRemaining()
     {
         return this.cards.size();

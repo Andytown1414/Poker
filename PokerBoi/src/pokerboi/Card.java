@@ -24,6 +24,12 @@ public class Card {
         this.value = calcValue(symbol);
         
     }
+    // copy constructor - not used atm i dont think i need it.
+    public Card(Card another){
+        this.suit = another.suit;
+         this.symbol = another.symbol;
+        this.value = another.value;
+    }
 
     public String getSuit() {
         return suit;

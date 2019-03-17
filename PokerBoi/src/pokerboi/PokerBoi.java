@@ -16,15 +16,23 @@ public class PokerBoi {
    private double pot;
    private double blindsAmount;
    private Deck pokerDeck;
+   ArrayList<Card> commonCards;
    private ArrayList<Player> players;
-   
+   private Player player1;
+   private Player player2;
    
     public PokerBoi()
     {
        // this.pot = 0;
         //this.blindsAmount = 5;
-        //this.players = new ArrayList<>();
+       
         this.pokerDeck = new Deck();
+        this.commonCards= new ArrayList<>();
+        this.players = new ArrayList();
+        this.player1 = new Player();
+        this.players.add(player1);
+        this.player2 = new Player();
+        this.players.add(player2);
     }
    
     
@@ -40,10 +48,10 @@ public class PokerBoi {
        // game.players.add(new Player());
        // game.players.add(new Player());
         
-     //   game.playRound();
-
-
-       test1();
+     //   game.playRound();v
+        PokerBoi theGame = new PokerBoi();
+        
+       theGame.test1();
     }
      private void playRound()
     {
@@ -52,7 +60,7 @@ public class PokerBoi {
         // deal 2 cards to each players
         // deal 3 cards to table
     }
-    private static void test1()
+    private void test1()
     {
         double noPairCount = 0;
         double pairCount = 0;
@@ -66,29 +74,51 @@ public class PokerBoi {
         double royalFlushCount = 0;
         double roundsPlayed = 0;
         
-        long roundsToPlay = 1000000;
+        long roundsToPlay = 5;
         
        
         
-        long[] rank = {0,0};
-       
+        long[] rankP1 = {0,0};
+        long[] rankP2 = {0,0};
         for(int g = 0;g < roundsToPlay;g++)
         {
+            // fresh deck for each round. does not set to null or anything, just clears its cards out and fills again. doesnt need to be set to null as it has no other properties that matter from game to game.
+            this.pokerDeck.reFreshDeck();
+            this.commonCards.clear();
             
             
-                PokerBoi theGame = new PokerBoi();
-                ArrayList<Card> aHand = new ArrayList<>();
-            
-                for(int i = 0;i< 7; i++)
+            for(Player p : players)
+            {
+                p.ditchCards();
+                p.getDealtHoleCards(this.pokerDeck.getCard(),this.pokerDeck.getCard());
+                
+            }
+                for(int i = 0;i< 5; i++)
                 {
-                    aHand.add(theGame.pokerDeck.getCard());
+                    this.commonCards.add(this.pokerDeck.getCard());
                 }
+                System.out.println("-------------------------------------");
+                System.out.print("common cards: ");
+                for(Card c : commonCards)
+                {
+                    System.out.print(c.getSymbol());
+                }
+                System.out.println("");
                
-                rank = Evaluator.evaluateRank5To7(aHand);
+              // System.out.println("size of commoncards before rankp1: " + commonCards.size());
+                rankP1 = Evaluator.evaluateRank5To7Opt(commonCards,player1.getHoleCards());
+              //  System.out.println("size of commoncards after rankp1: " + commonCards.size());
+                
+                rankP2 = Evaluator.evaluateRank5To7Opt(commonCards,player2.getHoleCards());
                // System.out.println("Rank: " + rank[0] + " , " + rank[1]);
                // System.out.println("");
+                player1.printHoleCards();
+                System.out.println("player 1 rank : " + rankP1[0]+", " + rankP1[1]);
+                player2.printHoleCards();
+                 System.out.println("player 2 rank : " + rankP2[0]+", " + rankP2[1]);
                 
-                
+                /*
+                // THE REST OF THIS METHOD IS JUST FOR STATS TO PRINT OUT AT THE END
                 switch ((int)rank[0])
          {
              case 0:
@@ -124,9 +154,10 @@ public class PokerBoi {
          }
                 
                 
-                roundsPlayed++;        
+                roundsPlayed++;     
+               */
         }
-        
+        /*
         System.out.println("Rounds Played = " + roundsPlayed);
         System.out.println("No Pairs = " + noPairCount + ". Frequency = " + (noPairCount * 100)/roundsPlayed + "%");
         System.out.println("Pairs = " + pairCount + ". Frequency = " + (pairCount * 100)/roundsPlayed + "%");
@@ -138,6 +169,7 @@ public class PokerBoi {
         System.out.println("Quads = " + quadsCount + ". Frequency = " + (quadsCount * 100)/roundsPlayed + "%");
         System.out.println("Straight Flushes = " + straightFlushCount+ ". Frequency = " + (straightFlushCount * 100)/roundsPlayed + "%");
         System.out.println("Royal Flushes = " + royalFlushCount+ ". Frequency = " + (royalFlushCount * 100)/roundsPlayed + "%");
+     */
     }
     
    
